@@ -1,13 +1,13 @@
-%define major 34
+%define major 36
 %define libname %mklibname icu %{major}
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	3.4
-Release:	%mkrel 2
+Version:	3.6
+Release:	%mkrel 1
 License:	MIT
 Group:		System/Libraries
-URL:		http://www-306.ibm.com/software/globalization/icu/index.jsp
+URL:		http://www.icu-project.org/index.html
 Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}-%{version}-docs.tar.bz2
 Requires:	%{libname} = %{version}
