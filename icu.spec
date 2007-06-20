@@ -1,15 +1,18 @@
-%define major 36
+%define major 34
 %define libname %mklibname icu %{major}
+%define develname %mklibname icu -d
+%define realversion 3.6
+%define tarballver %(echo %realversion|sed -e 's|\\.|_|')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	3.6
+Version:	%realversion
 Release:	%mkrel 1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
-Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}-%{version}.tar.bz2
-Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}-%{version}-docs.tar.bz2
+Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
+Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-docs.zip
 Requires:	%{libname} = %{version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
@@ -71,6 +74,8 @@ include:
 %package -n	%{libname}
 Summary:	Libraries for the International Components for Unicode
 Group:		System/Libraries
+Provides:	lib%name = %{version}-%{release}
+Obsoletes:	%mklibname %{name} 34
 
 %description -n	%{libname}
 The International Components for Unicode (ICU) libraries provide robust and
@@ -97,15 +102,17 @@ include:
   * Formatting and Parsing: dates, times, numbers, currencies, messages and   
     rule based
                     
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Tools required to embed the International Components for Unicode
 Group:		Development/Other
 Requires:	%{libname} = %{version}
 Provides:	%{name}%{major}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%{libname}-devel
 %define _requires_exceptions statically\\|linked
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 The International Components for Unicode (ICU) libraries provide robust and
 full-featured Unicode services on a wide variety of platforms. ICU supports
 the most current version of the Unicode standard, and they provide support
@@ -135,9 +142,10 @@ include:
 
 %setup -q -n %{name}
 
-%__mkdir_p docs
+mkdir -p docs
 cd docs
-%__tar xjf %SOURCE1
+unzip -q %SOURCE1
+cd -
 
 %build
 cd source
@@ -182,14 +190,14 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/*.so
 %dir %{_includedir}/layout
 %dir %{_includedir}/unicode
 %{_includedir}/layout/*
 %{_includedir}/unicode/*
-%dir %{_libdir}/%{name}/%{version}
+#%dir %{_libdir}/%{name}/%{version}
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
 %dir %{_datadir}/%{name}
