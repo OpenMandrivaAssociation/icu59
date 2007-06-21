@@ -1,19 +1,19 @@
-%define major 34
+%define major 36
 %define libname %mklibname icu %{major}
-%define develname %mklibname icu -d
+%define develname %mklibname icu -d %major
 %define realversion 3.6
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
 Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-docs.zip
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
