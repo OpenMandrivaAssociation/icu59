@@ -105,7 +105,7 @@ include:
 %package -n	%{develname}
 Summary:	Tools required to embed the International Components for Unicode
 Group:		Development/Other
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}%{major}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
