@@ -1,13 +1,13 @@
 %define major 36
 %define libname %mklibname icu %{major}
-%define develname %mklibname icu -d %major
+%define develname %mklibname icu -d
 %define realversion 3.6
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
