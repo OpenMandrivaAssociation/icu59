@@ -7,7 +7,7 @@
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
@@ -158,6 +158,7 @@ CFLAGS="%{optflags}" CXXFLAGS="%{optflags}" ./runConfigureICU LinuxRedHat \
 
 make
 ## make check
+sed -i -e "s|/lib\([\"/]\)|/%{_lib}\1|" config/icu-config
 
 %install
 rm -rf %{buildroot}
@@ -177,6 +178,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_bindir}/*
+%exclude %{_bindir}/icu-config
 %{_sbindir}/*
 %{_datadir}/%{name}/
 
@@ -192,6 +194,7 @@ rm -rf %{buildroot}
 
 %files -n %{develname}
 %defattr(-,root,root)
+%{_bindir}/icu-config
 %{_libdir}/*.so
 %dir %{_includedir}/layout
 %dir %{_includedir}/unicode
