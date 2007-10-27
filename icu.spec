@@ -1,13 +1,13 @@
-%define major 36
+%define major 38
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 3.6
+%define realversion 3.8
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 4
+Release:	%mkrel 1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
@@ -74,8 +74,6 @@ include:
 %package -n	%{libname}
 Summary:	Libraries for the International Components for Unicode
 Group:		System/Libraries
-Provides:	lib%name = %{version}-%{release}
-Obsoletes:	%mklibname %{name} 34
 
 %description -n	%{libname}
 The International Components for Unicode (ICU) libraries provide robust and
@@ -109,7 +107,8 @@ Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}%{major}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
-Obsoletes:	%{libname}-devel
+Obsoletes:	%mklibname -d icu 36
+Obsoletes:	%mklibname -d icu 34
 %define _requires_exceptions statically\\|linked
 
 %description -n	%{develname}
@@ -190,7 +189,7 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
@@ -200,7 +199,6 @@ rm -rf %{buildroot}
 %dir %{_includedir}/unicode
 %{_includedir}/layout/*
 %{_includedir}/unicode/*
-#%dir %{_libdir}/%{name}/%{version}
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
 %dir %{_datadir}/%{name}
