@@ -1,18 +1,18 @@
 %define major 38
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 3.8
-%define tarballver %(echo %realversion|sed -e 's|\\.|_|')
+%define realversion 3.8.1
+%define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
-Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-docs.zip
+Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-3_8-docs.zip
 Patch:		icu4c-3_8-setBreakType.patch
 Requires:	%{libname} = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
