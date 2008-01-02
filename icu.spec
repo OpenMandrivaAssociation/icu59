@@ -15,6 +15,7 @@ Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4
 Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-3_8-docs.zip
 Patch:		icu4c-3_8-setBreakType.patch
 Requires:	%{libname} = %{version}-%{release}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 The International Components for Unicode (ICU) libraries provide robust and
