@@ -1,20 +1,19 @@
-%define major 38
+%define major 40
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 3.8.1
+%define realversion 4.0.d01
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
-Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-3_8-docs.zip
+Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-4_0_d01-docs.zip
 Patch:		icu4c-3_8-setBreakType.patch
-Patch1:		icu-3.6-rh-CVE-2007-4770_4771.patch
 Requires:	%{libname} = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
@@ -143,7 +142,6 @@ include:
 
 %setup -q -n %{name}
 %patch -p1 -b .setBreakType
-%patch1 -p1 -b .cve-2007-4770_4771
 
 mkdir -p docs
 cd docs
