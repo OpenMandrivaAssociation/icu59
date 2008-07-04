@@ -8,7 +8,7 @@ Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
 Release:	%mkrel 1
-Epoch:		0
+Epoch:		1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
