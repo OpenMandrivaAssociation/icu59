@@ -14,6 +14,7 @@ Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
 Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-docs.zip
+Source2:	http://cvs.fedora.redhat.com/viewcvs/*checkout*/devel/icu/icu-config
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
 Patch2:		%{name}4c-4_0-multiarch.patch
@@ -119,7 +120,7 @@ pushd source
 # fix attribs
 chmod 755 %{buildroot}%{_libdir}/*.so*
 
-sed -i -e "s|/lib\([\"/]\)|/%{_lib}\1|" config/icu-config
+install -m 755 %{SOURCE2} %buildroot%_bindir/icu-config
 sed -i s/\\\$\(THREADSCXXFLAGS\)// %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 sed -i s/\\\$\(THREADSCPPFLAGS\)/-D_REENTRANT/ %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 
