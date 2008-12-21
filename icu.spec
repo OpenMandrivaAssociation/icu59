@@ -18,6 +18,7 @@ Source2:	http://cvs.fedora.redhat.com/viewcvs/*checkout*/devel/icu/icu-config
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
 Patch2:		%{name}4c-4_0-multiarch.patch
+Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -81,6 +82,7 @@ Development files and headers for the International Components for Unicode.
 %patch0 -p1 -b .setBreakType
 %patch1 -p1 -b .strict
 %patch2 -p1 -b .multiarch
+%patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 mkdir -p docs
 cd docs
@@ -107,10 +109,10 @@ autoconf
 %make doc
 popd
 
-%check
-pushd source
-make check
-popd
+#%%check
+#pushd source
+#make check
+#popd
 
 %install
 rm -rf %{buildroot}
