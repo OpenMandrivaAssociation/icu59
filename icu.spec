@@ -1,13 +1,13 @@
 %define major 40
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.0
+%define realversion 4.0.1
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
 Version:	%realversion
-Release:	%mkrel 3
+Release:	%mkrel 1
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -122,7 +122,7 @@ pushd source
 # fix attribs
 chmod 755 %{buildroot}%{_libdir}/*.so*
 
-install -m 755 %{SOURCE2} %buildroot%_bindir/icu-config
+install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/icu-config
 sed -i s/\\\$\(THREADSCXXFLAGS\)// %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 sed -i s/\\\$\(THREADSCPPFLAGS\)/-D_REENTRANT/ %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 
