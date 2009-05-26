@@ -19,6 +19,7 @@ Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
 Patch2:		%{name}4c-4_0-multiarch.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
+Patch4:		icu4c-4_0_1-gcc44.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -83,6 +84,7 @@ Development files and headers for the International Components for Unicode.
 %patch1 -p1 -b .strict
 %patch2 -p1 -b .multiarch
 %patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+%patch4 -p1 -b .gcc44
 
 mkdir -p docs
 cd docs
