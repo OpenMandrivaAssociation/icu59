@@ -1,7 +1,7 @@
-%define major 40
+%define major 42
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.0.1
+%define realversion 4.2
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
@@ -12,14 +12,13 @@ Epoch:		1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
-Source0:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-src.tgz
-Source1:	ftp://ftp.software.ibm.com/software/globalization/icu/%version/%{name}4c-%{tarballver}-docs.zip
+Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
+Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
 Source2:	http://cvs.fedora.redhat.com/viewcvs/*checkout*/devel/icu/icu-config
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
-Patch2:		%{name}4c-4_0-multiarch.patch
+Patch2:		%{name}4c-4_2-multiarch.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
-Patch4:		icu4c-4_0_1-gcc44.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -84,7 +83,6 @@ Development files and headers for the International Components for Unicode.
 %patch1 -p1 -b .strict
 %patch2 -p1 -b .multiarch
 %patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-%patch4 -p1 -b .gcc44
 
 mkdir -p docs
 cd docs
@@ -124,7 +122,7 @@ pushd source
 # fix attribs
 chmod 755 %{buildroot}%{_libdir}/*.so*
 
-install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/icu-config
+#install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/icu-config
 sed -i s/\\\$\(THREADSCXXFLAGS\)// %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 sed -i s/\\\$\(THREADSCPPFLAGS\)/-D_REENTRANT/ %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 
