@@ -6,8 +6,8 @@
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.2.1
-Release:	%mkrel 2
+Version:	4.3.1
+Release:	%mkrel 1
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
