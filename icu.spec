@@ -97,11 +97,7 @@ pushd source
 autoconf
 
 %configure2_5x \
-	%ifarch ix86
-	--disable-64bit-libs \
-	%else
-	--enable-64bit-libs \
-	%endif
+	--with-library-bits=64else32 \
 	--disable-rpath \
 	--with-data-packaging=library \
 	--disable-samples \
