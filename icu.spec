@@ -1,13 +1,13 @@
-%define major 42
+%define major 44
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.2.1
+%define realversion 4.4
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.2.1
-Release:	%mkrel 2
+Version:	4.4
+Release:	%mkrel 1
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -19,7 +19,7 @@ Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
 Patch2:		%{name}4c-4_2-multiarch.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
-Patch4:		icu-4.2.1-configure.patch
+Patch4:		icu-4.4-configure.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
