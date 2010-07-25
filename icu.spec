@@ -1,13 +1,13 @@
-%define major 44
+%define major 45
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.4
+%define realversion 4.5.1
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.4
-Release:	%mkrel 2
+Version:	4.5.1
+Release:	%mkrel 1
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -17,7 +17,6 @@ Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarb
 Source2:	http://cvs.fedora.redhat.com/viewcvs/*checkout*/devel/icu/icu-config
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch1:		%{name}4c-4_0-strictaliasing.patch
-Patch2:		%{name}4c-4_2-multiarch.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
 Patch4:		icu-4.4-configure.patch
 BuildRequires:	doxygen
@@ -82,7 +81,6 @@ Development files and headers for the International Components for Unicode.
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
 %patch1 -p1 -b .strict
-%patch2 -p1 -b .multiarch
 %patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 %patch4 -p1
 
