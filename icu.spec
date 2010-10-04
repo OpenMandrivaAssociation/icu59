@@ -1,12 +1,12 @@
 %define major 44
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.4.1
+%define realversion 4.4.2
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.4.1
+Version:	4.4.2
 Release:	%mkrel 1
 Epoch:		1
 License:	MIT
