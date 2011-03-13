@@ -1,12 +1,12 @@
-%define major 44
+%define major 46
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.4.2
+%define realversion 4.6.1
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.4.2
+Version:	4.6.1
 Release:	%mkrel 1
 Epoch:		1
 License:	MIT
@@ -14,11 +14,8 @@ Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
-Source2:	http://cvs.fedora.redhat.com/viewcvs/*checkout*/devel/icu/icu-config
 Patch0:		%{name}4c-3_8-setBreakType.patch
-Patch2:		icu4c-4_2-multiarch.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
-Patch4:		icu-4.4-configure.patch
 Patch5:		icu-4.4.1-pkgdata.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
@@ -81,10 +78,7 @@ Development files and headers for the International Components for Unicode.
 %prep
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
-%patch2 -p1 -b .multiarch
 %patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-%patch4 -p1
-%patch5 -p0 -b .bufferoverflow
 
 mkdir -p docs
 cd docs
@@ -94,7 +88,6 @@ cd -
 %build
 pushd source
 # (tpg) needed for patch 2
-autoconf
 export CFLAGS='%optflags -fno-strict-aliasing'
 export CXXFLAGS='%optflags -fno-strict-aliasing'
 %configure2_5x \
@@ -106,25 +99,16 @@ export CXXFLAGS='%optflags -fno-strict-aliasing'
 %make doc
 popd
 
-#%%check
-#pushd source
-#make check
-#popd
+%check
+pushd source
+make check
+popd
 
 %install
 rm -rf %{buildroot}
 pushd source
 %makeinstall_std
 popd
-
-cp -pR ./source/tools/ctestfw/libicutest.so* %buildroot/%{_libdir}
-
-# fix attribs
-chmod 755 %{buildroot}%{_libdir}/*.so*
-
-install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/icu-config
-sed -i s/\\\$\(THREADSCXXFLAGS\)// %{buildroot}/%{_libdir}/pkgconfig/icu.pc
-sed -i s/\\\$\(THREADSCPPFLAGS\)/-D_REENTRANT/ %{buildroot}/%{_libdir}/pkgconfig/icu.pc
 
 %clean
 rm -rf %{buildroot}
