@@ -7,7 +7,7 @@
 Summary:	International Components for Unicode
 Name:		icu
 Version:	4.6.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -16,7 +16,7 @@ Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarb
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
-Patch5:		icu-4.4.1-pkgdata.patch
+Patch6:		icu-4.6.1-do-not-promote-ldflags.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -79,6 +79,7 @@ Development files and headers for the International Components for Unicode.
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
 %patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+%patch6 -p0 -b .ldflags
 
 mkdir -p docs
 cd docs
