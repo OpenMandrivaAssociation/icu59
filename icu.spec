@@ -92,7 +92,6 @@ export CFLAGS='%optflags -fno-strict-aliasing'
 export CXXFLAGS='%optflags -fno-strict-aliasing'
 %configure2_5x \
 	--with-library-bits=64else32 \
-	--disable-rpath \
 	--with-data-packaging=library \
 	--disable-samples
 %make
@@ -141,7 +140,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_bindir}/icu-config
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/icu.pc
+%{_libdir}/pkgconfig/*.pc
 %dir %{_includedir}/layout
 %dir %{_includedir}/unicode
 %{_includedir}/layout/*
