@@ -1,13 +1,13 @@
-%define major 46
+%define major 48
 %define libname %mklibname icu %{major}
 %define develname %mklibname icu -d
-%define realversion 4.6.1
+%define realversion 4.8
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.6.1
-Release:	%mkrel 3
+Version:	4.8
+Release:	%mkrel 1
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -15,7 +15,6 @@ URL:		http://www.icu-project.org/index.html
 Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
 Patch0:		%{name}4c-3_8-setBreakType.patch
-Patch3:		icu4c-4_0-format_not_a_string_literal_and_no_format_arguments.diff
 Patch6:		icu-4.6.1-do-not-promote-ldflags.patch
 BuildRequires:	doxygen
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
@@ -78,7 +77,6 @@ Development files and headers for the International Components for Unicode.
 %prep
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
-%patch3 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 %patch6 -p0 -b .ldflags
 
 mkdir -p docs
