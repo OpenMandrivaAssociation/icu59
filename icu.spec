@@ -7,7 +7,7 @@
 Summary:	International Components for Unicode
 Name:		icu
 Version:	4.8
-Release:	%mkrel 1
+Release:	2
 Epoch:		1
 License:	MIT
 Group:		System/Libraries
@@ -16,9 +16,9 @@ Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarb
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
 Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch6:		icu-4.6.1-do-not-promote-ldflags.patch
+Patch7:		icu4c-4_8-CVE-2011-4599.diff
 BuildRequires:	doxygen
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
+Requires:	%{libname} >= %{epoch}:%{version}-%{release}
 
 %description
 The International Components for Unicode (ICU) libraries provide robust and
@@ -48,7 +48,7 @@ include:
 %package doc
 Summary:	Documentation for the International Components for Unicode
 Group:		System/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} >= %{epoch}:%{version}-%{release}
 
 %description doc
 Documentation for the International Components for Unicode.
@@ -63,7 +63,7 @@ Libraries for the International Components for Unicode.
 %package -n %{develname}
 Summary:	Development files for the International Components for Unicode
 Group:		Development/Other
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
+Requires:	%{libname} >= %{epoch}:%{version}-%{release}
 Provides:	%{name}%{major}-devel = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
@@ -75,9 +75,11 @@ Obsoletes:	%mklibname -d icu 34
 Development files and headers for the International Components for Unicode.
 
 %prep
+
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
 %patch6 -p0 -b .ldflags
+%patch7 -p0 -b .CVE-2011-4599
 
 mkdir -p docs
 cd docs
@@ -108,35 +110,20 @@ pushd source
 %makeinstall_std
 popd
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(-,root,root)
 %{_bindir}/*
 %exclude %{_bindir}/icu-config
 %{_sbindir}/*
 
 %files doc
-%defattr(-,root,root)
 %doc readme.html docs/*
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_bindir}/icu-config
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
