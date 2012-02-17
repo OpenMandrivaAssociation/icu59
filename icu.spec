@@ -1,14 +1,22 @@
 %define major 48
-%define libname %mklibname icu %{major}
-%define develname %mklibname icu -d
+%define libicudata %mklibname %{name}data %{major}
+%define libicui18n %mklibname %{name}i18n %{major}
+%define libicuio %mklibname %{name}io %{major}
+%define libicule %mklibname %{name}le %{major}
+%define libiculx %mklibname %{name}lx %{major}
+%define libicutest %mklibname %{name}test %{major}
+%define libicutu %mklibname %{name}tu %{major}
+%define libicuuc %mklibname %{name}uc %{major}
+%define develname %mklibname %{name} -d
+
 %define realversion 4.8
 %define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
-Version:	4.8
-Release:	2
 Epoch:		1
+Version:	4.8
+Release:	3
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
@@ -18,7 +26,6 @@ Patch0:		%{name}4c-3_8-setBreakType.patch
 Patch6:		icu-4.6.1-do-not-promote-ldflags.patch
 Patch7:		icu4c-4_8-CVE-2011-4599.diff
 BuildRequires:	doxygen
-Requires:	%{libname} >= %{epoch}:%{version}-%{release}
 
 %description
 The International Components for Unicode (ICU) libraries provide robust and
@@ -53,17 +60,81 @@ Requires:	%{name} >= %{epoch}:%{version}-%{release}
 %description doc
 Documentation for the International Components for Unicode.
 
-%package -n %{libname}
-Summary:	Libraries for the International Components for Unicode
+%package -n %{libicudata}
+Summary:	Library for the International Components for Unicode - icudata
 Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
 
-%description -n %{libname}
-Libraries for the International Components for Unicode.
+%description -n %{libicudata}
+Library for the International Components for Unicode - icudata.
+
+%package -n %{libicui18n}
+Summary:	Library for the International Components for Unicode - icui18n
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicui18n}
+Library for the International Components for Unicode - icui18n.
+
+%package -n %{libicuio}
+Summary:	Library for the International Components for Unicode - icuio
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicuio}
+Library for the International Components for Unicode - icuio.
+
+%package -n %{libicule}
+Summary:	Library for the International Components for Unicode - icule
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicule}
+Library for the International Components for Unicode - icule.
+
+%package -n %{libiculx}
+Summary:	Library for the International Components for Unicode - iculx
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libiculx}
+Library for the International Components for Unicode - iculx.
+
+%package -n %{libicutest}
+Summary:	Library for the International Components for Unicode - icutest
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicutest}
+Library for the International Components for Unicode - icutest.
+
+%package -n %{libicutu}
+Summary:	Library for the International Components for Unicode - icutu
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicutu}
+Library for the International Components for Unicode - icutu.
+
+%package -n %{libicuuc}
+Summary:	Library for the International Components for Unicode - icuuc
+Group:		System/Libraries
+Conflicts:	%{_lib}icu48 < 1:4.8-3
+
+%description -n %{libicuuc}
+Library for the International Components for Unicode - icuuc.
 
 %package -n %{develname}
 Summary:	Development files for the International Components for Unicode
 Group:		Development/Other
-Requires:	%{libname} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicudata} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicui18n} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicuio} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicule} >= %{epoch}:%{version}-%{release}
+Requires:	%{libiculx} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicutest} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicutu} >= %{epoch}:%{version}-%{release}
+Requires:	%{libicuuc} >= %{epoch}:%{version}-%{release}
 Provides:	%{name}%{major}-devel = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
@@ -120,8 +191,29 @@ popd
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
-%files -n %{libname}
-%{_libdir}/*.so.%{major}*
+%files -n %{libicudata}
+%{_libdir}/libicudata.so.%{major}*
+
+%files -n %{libicui18n}
+%{_libdir}/libicui18n.so.%{major}*
+
+%files -n %{libicuio}
+%{_libdir}/libicuio.so.%{major}*
+
+%files -n %{libicule}
+%{_libdir}/libicule.so.%{major}*
+
+%files -n %{libiculx}
+%{_libdir}/libiculx.so.%{major}*
+
+%files -n %{libicutest}
+%{_libdir}/libicutest.so.%{major}*
+
+%files -n %{libicutu}
+%{_libdir}/libicutu.so.%{major}*
+
+%files -n %{libicuuc}
+%{_libdir}/libicuuc.so.%{major}*
 
 %files -n %{develname}
 %{_bindir}/icu-config
