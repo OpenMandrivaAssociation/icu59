@@ -1,4 +1,4 @@
-%define major 48
+%define major %(echo %version |cut -d. -f1)
 %define libicudata %mklibname %{name}data %{major}
 %define libicui18n %mklibname %{name}i18n %{major}
 %define libicuio %mklibname %{name}io %{major}
@@ -9,22 +9,20 @@
 %define libicuuc %mklibname %{name}uc %{major}
 %define develname %mklibname %{name} -d
 
-%define realversion 4.8
-%define tarballver %(echo %realversion|sed -e 's|\\.|_|g')
+%define tarballver %(echo %version|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
-Version:	4.8
-Release:	4
+Version:	49.1.1
+Release:	1
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
 Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
-Patch0:		%{name}4c-3_8-setBreakType.patch
+Patch0:		%{name}4c-49.1-setBreakType.patch
 Patch6:		icu-4.6.1-do-not-promote-ldflags.patch
-Patch7:		icu4c-4_8-CVE-2011-4599.diff
 BuildRequires:	doxygen
 
 %description
@@ -63,7 +61,6 @@ Documentation for the International Components for Unicode.
 %package -n %{libicudata}
 Summary:	Library for the International Components for Unicode - icudata
 Group:		System/Libraries
-Obsoletes:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicudata}
 Library for the International Components for Unicode - icudata.
@@ -71,7 +68,6 @@ Library for the International Components for Unicode - icudata.
 %package -n %{libicui18n}
 Summary:	Library for the International Components for Unicode - icui18n
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicui18n}
 Library for the International Components for Unicode - icui18n.
@@ -79,7 +75,6 @@ Library for the International Components for Unicode - icui18n.
 %package -n %{libicuio}
 Summary:	Library for the International Components for Unicode - icuio
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicuio}
 Library for the International Components for Unicode - icuio.
@@ -87,7 +82,6 @@ Library for the International Components for Unicode - icuio.
 %package -n %{libicule}
 Summary:	Library for the International Components for Unicode - icule
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicule}
 Library for the International Components for Unicode - icule.
@@ -95,7 +89,6 @@ Library for the International Components for Unicode - icule.
 %package -n %{libiculx}
 Summary:	Library for the International Components for Unicode - iculx
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libiculx}
 Library for the International Components for Unicode - iculx.
@@ -103,7 +96,6 @@ Library for the International Components for Unicode - iculx.
 %package -n %{libicutest}
 Summary:	Library for the International Components for Unicode - icutest
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicutest}
 Library for the International Components for Unicode - icutest.
@@ -111,7 +103,6 @@ Library for the International Components for Unicode - icutest.
 %package -n %{libicutu}
 Summary:	Library for the International Components for Unicode - icutu
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicutu}
 Library for the International Components for Unicode - icutu.
@@ -119,7 +110,6 @@ Library for the International Components for Unicode - icutu.
 %package -n %{libicuuc}
 Summary:	Library for the International Components for Unicode - icuuc
 Group:		System/Libraries
-Conflicts:	%{_lib}icu48 < 1:4.8-3
 
 %description -n %{libicuuc}
 Library for the International Components for Unicode - icuuc.
@@ -138,6 +128,7 @@ Requires:	%{libicuuc} >= %{epoch}:%{version}-%{release}
 Provides:	%{name}%{major}-devel = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
+Obsoletes:	%mklibname -d icu 48
 Obsoletes:	%mklibname -d icu 36
 Obsoletes:	%mklibname -d icu 34
 #define _requires_exceptions statically\\|linked
@@ -150,7 +141,6 @@ Development files and headers for the International Components for Unicode.
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
 %patch6 -p0 -b .ldflags
-%patch7 -p0 -b .CVE-2011-4599
 
 mkdir -p docs
 cd docs
