@@ -15,7 +15,7 @@ Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
 Version:	49.1.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
@@ -53,7 +53,7 @@ include:
 %package doc
 Summary:	Documentation for the International Components for Unicode
 Group:		System/Libraries
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} >= %{EVRD}
 
 %description doc
 Documentation for the International Components for Unicode.
@@ -117,27 +117,26 @@ Library for the International Components for Unicode - icuuc.
 %package -n %{develname}
 Summary:	Development files for the International Components for Unicode
 Group:		Development/Other
-Requires:	%{libicudata} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicui18n} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicuio} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicule} >= %{epoch}:%{version}-%{release}
-Requires:	%{libiculx} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicutest} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicutu} >= %{epoch}:%{version}-%{release}
-Requires:	%{libicuuc} >= %{epoch}:%{version}-%{release}
-Provides:	%{name}%{major}-devel = %{epoch}:%{version}-%{release}
-Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname -d icu 48
-Obsoletes:	%mklibname -d icu 36
-Obsoletes:	%mklibname -d icu 34
+Requires:	%{libicudata} >= %{EVRD}
+Requires:	%{libicui18n} >= %{EVRD}
+Requires:	%{libicuio} >= %{EVRD}
+Requires:	%{libicule} >= %{EVRD}
+Requires:	%{libiculx} >= %{EVRD}
+Requires:	%{libicutest} >= %{EVRD}
+Requires:	%{libicutu} >= %{EVRD}
+Requires:	%{libicuuc} >= %{EVRD}
+Provides:	%{name}%{major}-devel = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Provides:	lib%{name}-devel = %{EVRD}
+Obsoletes:	%{mklibname -d icu 48} < 1:49
+Obsoletes:	%{mklibname -d icu 36} < 1:49
+Obsoletes:	%{mklibname -d icu 34} < 1:49
 #define _requires_exceptions statically\\|linked
 
 %description -n	%{develname}
 Development files and headers for the International Components for Unicode.
 
 %prep
-
 %setup -q -n %{name}
 %patch0 -p1 -b .setBreakType
 %patch6 -p0 -b .ldflags
@@ -150,8 +149,8 @@ cd -
 %build
 pushd source
 # (tpg) needed for patch 2
-export CFLAGS='%optflags -fno-strict-aliasing'
-export CXXFLAGS='%optflags -fno-strict-aliasing'
+export CFLAGS='%{optflags} -fno-strict-aliasing'
+export CXXFLAGS='%{optflags} -fno-strict-aliasing'
 %configure2_5x \
 	--with-library-bits=64else32 \
 	--with-data-packaging=library \
@@ -217,3 +216,191 @@ popd
 %{_libdir}/%{name}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/*
+
+
+%changelog
+* Sat Apr 07 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1:49.1.1-1
++ Revision: 789731
+- Update to 49.1.1
+
+* Fri Feb 17 2012 Matthew Dawkins <mattydaw@mandriva.org> 1:4.8-4
++ Revision: 776216
+- rebuild to obsolete old lib pkg
+
+* Fri Feb 17 2012 Matthew Dawkins <mattydaw@mandriva.org> 1:4.8-3
++ Revision: 776158
+- split out individual libs
+
+* Thu Jan 12 2012 Oden Eriksson <oeriksson@mandriva.com> 1:4.8-2
++ Revision: 760505
+- sync with MDVSA-2011:194
+
+* Sun Jun 05 2011 Funda Wang <fwang@mandriva.org> 1:4.8-1
++ Revision: 682800
+- new version 4.8
+
+* Wed May 04 2011 Oden Eriksson <oeriksson@mandriva.com> 1:4.6.1-3
++ Revision: 665501
+- mass rebuild
+
+* Mon Mar 14 2011 Funda Wang <fwang@mandriva.org> 1:4.6.1-2
++ Revision: 644587
+- do not promote ldflags in icu-config
+
+* Mon Mar 14 2011 Funda Wang <fwang@mandriva.org> 1:4.6.1-1
++ Revision: 644490
+- update file list
+- new version 4.6.1
+- drop merged patches and old icu-config
+
+* Mon Oct 04 2010 Funda Wang <fwang@mandriva.org> 1:4.4.2-1mdv2011.0
++ Revision: 582874
+- new version 4.4.2
+
+* Sat Jul 31 2010 Funda Wang <fwang@mandriva.org> 1:4.4.1-1mdv2011.0
++ Revision: 563953
+- do not use strict alias patch but use cflags, upstream does not like the patch
+- add upstream patch to deal with buffer overflow problem
+- revert to 4.4.1 stable
+
+  + Matthew Dawkins <mattydaw@mandriva.org>
+    - new version 4.5.1
+      patch applied upstream
+
+* Sun Mar 21 2010 Funda Wang <fwang@mandriva.org> 1:4.4-2mdv2010.1
++ Revision: 526037
+- install libicutest
+
+* Sat Mar 20 2010 Emmanuel Andry <eandry@mandriva.org> 1:4.4-1mdv2010.1
++ Revision: 525429
+- New version 4.4
+- New major 44
+- rediff p4
+
+  + Funda Wang <fwang@mandriva.org>
+    - build 64 bits at first
+
+* Mon Jan 11 2010 Tomasz Pawel Gajc <tpg@mandriva.org> 1:4.2.1-2mdv2010.1
++ Revision: 489818
+- Patch4: fix build
+- really use 4.2.1 tarballs
+
+* Sat Jul 25 2009 Frederik Himpe <fhimpe@mandriva.org> 1:4.2.1-1mdv2010.0
++ Revision: 399844
+- update to new version 4.2.1
+
+* Sun May 31 2009 Funda Wang <fwang@mandriva.org> 1:4.2-2mdv2010.0
++ Revision: 381588
+- stil use fedora's icu-config
+
+* Sun May 31 2009 Funda Wang <fwang@mandriva.org> 1:4.2-1mdv2010.0
++ Revision: 381575
+- New version 4.2
+
+  + Christophe Fergeau <cfergeau@mandriva.com>
+    - fix compilation with gcc 4.4
+
+* Tue Jan 20 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 1:4.0.1-1mdv2009.1
++ Revision: 331791
+- update to new version 4.0.1
+
+* Sun Dec 21 2008 Oden Eriksson <oeriksson@mandriva.com> 1:4.0-3mdv2009.1
++ Revision: 316951
+- fix build with -Werror=format-security (P3)
+- rebuild
+
+* Wed Jul 16 2008 Funda Wang <fwang@mandriva.org> 1:4.0-2mdv2009.0
++ Revision: 236515
+- switch fedora's icu-config for the package's own icu-config breaks too much
+
+* Fri Jul 04 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 1:4.0-1mdv2009.0
++ Revision: 231685
+- enable epoch :(
+- update to new version 4.0 (looks like the versioning has been broken, epoch needed ?)
+- fix descriptions
+- Patch1: enable build with strict-aliasing
+- Patch2: add icu.pc
+- add buildrequires on doxygen
+- enable checks
+- fix file list
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Fri May 30 2008 Funda Wang <fwang@mandriva.org> 4.0.d01-1mdv2009.0
++ Revision: 213349
+- New version 4.0.d01
+
+* Sat Jan 26 2008 Funda Wang <fwang@mandriva.org> 3.8.1-2mdv2008.1
++ Revision: 158374
+- fix CVE 2007-4770 and 4771
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Fri Dec 14 2007 Funda Wang <fwang@mandriva.org> 3.8.1-1mdv2008.1
++ Revision: 120061
+- New version 3.8.1
+
+* Tue Dec 11 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 3.8-2mdv2008.1
++ Revision: 117322
+- Added patch setBreakType, which makes that method public, as OOo requires it
+  to be.
+
+* Sat Oct 27 2007 Funda Wang <fwang@mandriva.org> 3.8-1mdv2008.1
++ Revision: 102667
+- New version 3.8
+- New major ( 36 -> 38 )
+
+* Sat Sep 01 2007 Pascal Terjan <pterjan@mandriva.org> 3.6-4mdv2008.0
++ Revision: 77367
+- Move icu-config to -devel package and fix it on x86_64
+
+* Sun Jun 24 2007 Funda Wang <fwang@mandriva.org> 3.6-3mdv2008.0
++ Revision: 43594
+- adopt to new devel package policy again
+
+* Thu Jun 21 2007 Funda Wang <fwang@mandriva.org> 3.6-2mdv2008.0
++ Revision: 42306
+- Really use correct tarball
+
+* Wed Jun 20 2007 Funda Wang <fwang@mandriva.org> 3.6-1mdv2008.0
++ Revision: 41947
+- correct tarball name
+  remove invalid directory
+  adopt to new develname
+- New version
+- Import icu
+
+
+
+* Tue Jan  3 2006 Götz Waschk <waschk@mandriva.org> 3.4-2mdk
+- drop devel package obsoletes
+- drop prereq
+- make the devel package installable
+
+* Tue Jan 03 2006 Oden Eriksson <oeriksson@mandriva.com> 3.4-1mdk
+- 3.4
+- drop the upstream patch (P0)
+- fix deps
+- make it rpmbuildupdate aware
+
+* Tue May 10 2005 Arnaud de Lorbeau <devel@mandriva.com> 3.2-2mdk
+- Provides icu32-devel
+
+* Tue May 10 2005 Arnaud de Lorbeau <devel@mandriva.com> 3.2-1mdk
+- 3.2
+
+* Mon Jun  7 2004 Götz Waschk <waschk@linux-mandrake.com> 2.8.d01-3mdk
+- rebuild
+
+* Fri Jun 04 2004 Marcel Pol <mpol@mandrake.org> 2.8.d01-2mdk
+- rebuild
+
+* Wed Dec 17 2003 Marcel Pol <mpol@mandrake.org> 2.8.d01-1mdk
+- major is 28
+- From Quel Qun <kelk1@hotmail.com>
+    - Mandrake package.
