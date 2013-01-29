@@ -1,3 +1,5 @@
 sources:
-  "icu4c-49_1_1-docs.zip": c9fcd1571cdfe5848d1336841624b3b92d259cb6
-  "icu4c-49_1_1-src.tgz": f407d7e2808b76e3a6ca316aab896aef74bf6722
+  icu4c-49_1_1-docs.zip: c9fcd1571cdfe5848d1336841624b3b92d259cb6
+  icu4c-49_1_1-src.tgz: f407d7e2808b76e3a6ca316aab896aef74bf6722
+  icu4c-50_1_2-docs.zip: da25991c15b4feec2164dba31abcc7c2ba2b2836
+  icu4c-50_1_2-src.tgz: ee121e3ba2c3599b36b3d3b4abf68f28e23c9b4a
