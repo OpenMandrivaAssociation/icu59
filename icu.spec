@@ -15,7 +15,7 @@ Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
 Version:	50.1.2
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.icu-project.org/index.html
@@ -61,6 +61,7 @@ Documentation for the International Components for Unicode.
 %package -n %{libicudata}
 Summary:	Library for the International Components for Unicode - icudata
 Group:		System/Libraries
+Obsoletes:	%{mklibname icu 44} <= 4.4.2
 
 %description -n %{libicudata}
 Library for the International Components for Unicode - icudata.
