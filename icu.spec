@@ -1,4 +1,4 @@
-%define major %(echo %version |cut -d. -f1)
+%define major %(echo %{version} |cut -d. -f1)
 %define libicudata %mklibname %{name}data %{major}
 %define libicui18n %mklibname %{name}i18n %{major}
 %define libicuio %mklibname %{name}io %{major}
@@ -7,9 +7,9 @@
 %define libicutest %mklibname %{name}test %{major}
 %define libicutu %mklibname %{name}tu %{major}
 %define libicuuc %mklibname %{name}uc %{major}
-%define develname %mklibname %{name} -d
+%define devname %mklibname %{name} -d
 
-%define tarballver %(echo %version|sed -e 's|\\.|_|g')
+%define tarballver %(echo %{version}|sed -e 's|\\.|_|g')
 
 Summary:	International Components for Unicode
 Name:		icu
@@ -18,7 +18,7 @@ Version:	50.1.2
 Release:	2
 License:	MIT
 Group:		System/Libraries
-URL:		http://www.icu-project.org/index.html
+Url:		http://www.icu-project.org/index.html
 Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
 Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
 Patch0:		%{name}4c-49.1-setBreakType.patch
@@ -115,7 +115,7 @@ Group:		System/Libraries
 %description -n %{libicuuc}
 Library for the International Components for Unicode - icuuc.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Development files for the International Components for Unicode
 Group:		Development/Other
 Requires:	%{libicudata} >= %{EVRD}
@@ -130,11 +130,11 @@ Provides:	%{name}%{major}-devel = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 #define _requires_exceptions statically\\|linked
 
-%description -n	%{develname}
+%description -n	%{devname}
 Development files and headers for the International Components for Unicode.
 
 %prep
-%setup -q -n %{name}
+%setup -qn %{name}
 %patch0 -p1 -b .setBreakType
 %patch6 -p0 -b .ldflags
 
@@ -198,7 +198,7 @@ popd
 %files -n %{libicuuc}
 %{_libdir}/libicuuc.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %{_bindir}/icu-config
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
