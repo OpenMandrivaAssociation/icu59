@@ -10,6 +10,7 @@
 %define devname %mklibname %{name} -d
 
 %define tarballver %(echo %{version}|sed -e 's|\\.|_|g')
+%bcond_with	crosscompile
 
 Summary:	International Components for Unicode
 Name:		icu
@@ -148,10 +149,22 @@ pushd source
 # (tpg) needed for patch 2
 export CFLAGS='%{optflags} -fno-strict-aliasing'
 export CXXFLAGS='%{optflags} -fno-strict-aliasing'
+# If we want crosscompile icu we need to built ICU package
+# and add --with-cross-build=/path/to/icu
+# disable bits and do unset TARGET twice, after configure
+# and before makeinstall
 %configure2_5x \
+%if !%{with crosscompile}
 	--with-library-bits=64else32 \
+%endif
 	--with-data-packaging=library \
+%if %{with crosscompile}
+	--with-cross-build=/path/to/built/icu/source/ \
+%endif
 	--disable-samples
+%if %{with crosscompile}
+unset TARGET
+%endif
 %make
 %make doc
 popd
@@ -162,6 +175,9 @@ make check
 popd
 
 %install
+%if %{with crosscompile}
+unset TARGET
+%endif
 %makeinstall_std -C source
 
 %files
