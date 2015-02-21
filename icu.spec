@@ -16,7 +16,7 @@ Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
 Version:	54.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.icu-project.org/index.html
@@ -151,7 +151,7 @@ export CXXFLAGS='%{optflags} -fno-strict-aliasing'
 # and add --with-cross-build=/path/to/icu
 # disable bits and do unset TARGET twice, after configure
 # and before makeinstall
-%configure2_5x \
+%configure \
 %if !%{with crosscompile}
 	--with-library-bits=64else32 \
 %endif
