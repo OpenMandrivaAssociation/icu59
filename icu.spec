@@ -147,11 +147,12 @@ pushd source
 # (tpg) needed for patch 2
 export CFLAGS='%{optflags} -fno-strict-aliasing'
 export CXXFLAGS='%{optflags} -fno-strict-aliasing'
+export LDFLAGS='%{ldflags} -fuse-ld=bfd'
 # If we want crosscompile icu we need to built ICU package
 # and add --with-cross-build=/path/to/icu
 # disable bits and do unset TARGET twice, after configure
 # and before makeinstall
-%configure \
+%configure --disable-samples \
 %if !%{with crosscompile}
 	--with-library-bits=64else32 \
 %endif
