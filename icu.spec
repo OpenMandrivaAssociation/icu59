@@ -8,6 +8,9 @@
 %define libicutu %mklibname %{name}tu %{major}
 %define libicuuc %mklibname %{name}uc %{major}
 %define devname %mklibname %{name} -d
+%ifarch %arm
+%define	_disable_lto %nil
+%endif
 
 %define tarballver %(echo %{version}|sed -e 's|\\.|_|g')
 %bcond_with	crosscompile
