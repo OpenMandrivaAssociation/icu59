@@ -19,7 +19,7 @@ Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
 Version:	57.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.icu-project.org/index.html
@@ -149,7 +149,7 @@ cd -
 pushd source
 # (tpg) needed for patch 2
 export CFLAGS='%{optflags} -fno-strict-aliasing'
-export CXXFLAGS='%{optflags} -fno-strict-aliasing'
+export CXXFLAGS='%{optflags} -fno-strict-aliasing -std=c++11'
 export LDFLAGS='%{ldflags} -fuse-ld=bfd'
 # If we want crosscompile icu we need to built ICU package
 # and add --with-cross-build=/path/to/icu
@@ -164,6 +164,21 @@ export LDFLAGS='%{ldflags} -fuse-ld=bfd'
 	--with-cross-build=/path/to/built/icu/source/ \
 %endif
 	--disable-samples
+
+#rhbz#225896
+sed -i 's|-nodefaultlibs -nostdlib||' config/mh-linux
+#rhbz#681941
+# As of ICU 52.1 the -nostdlib in tools/toolutil/Makefile results in undefined reference to `__dso_handle'
+sed -i 's|^LIBS =.*|LIBS = -L../../lib -licui18n -licuuc -lpthread|' tools/toolutil/Makefile
+#rhbz#813484
+sed -i 's| \$(docfilesdir)/installdox||' Makefile
+# There is no source/doc/html/search/ directory
+sed -i '/^\s\+\$(INSTALL_DATA) \$(docsrchfiles) \$(DESTDIR)\$(docdir)\/\$(docsubsrchdir)\s*$/d' Makefile
+# rhbz#856594 The configure --disable-renaming and possibly other options
+# result in icu/source/uconfig.h.prepend being created, include that content in
+# icu/source/common/unicode/uconfig.h to propagate to consumer packages.
+test -f uconfig.h.prepend && sed -e '/^#define __UCONFIG_H__/ r uconfig.h.prepend' -i common/unicode/uconfig.h
+
 %if %{with crosscompile}
 unset TARGET
 %endif
