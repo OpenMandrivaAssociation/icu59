@@ -2,8 +2,6 @@
 %define libicudata %mklibname %{name}data %{major}
 %define libicui18n %mklibname %{name}i18n %{major}
 %define libicuio %mklibname %{name}io %{major}
-%define libicule %mklibname %{name}le %{major}
-%define libiculx %mklibname %{name}lx %{major}
 %define libicutest %mklibname %{name}test %{major}
 %define libicutu %mklibname %{name}tu %{major}
 %define libicuuc %mklibname %{name}uc %{major}
@@ -18,8 +16,8 @@
 Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
-Version:	57.1
-Release:	2
+Version:	58.1
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.icu-project.org/index.html
@@ -83,20 +81,6 @@ Group:		System/Libraries
 %description -n %{libicuio}
 Library for the International Components for Unicode - icuio.
 
-%package -n %{libicule}
-Summary:	Library for the International Components for Unicode - icule
-Group:		System/Libraries
-
-%description -n %{libicule}
-Library for the International Components for Unicode - icule.
-
-%package -n %{libiculx}
-Summary:	Library for the International Components for Unicode - iculx
-Group:		System/Libraries
-
-%description -n %{libiculx}
-Library for the International Components for Unicode - iculx.
-
 %package -n %{libicutest}
 Summary:	Library for the International Components for Unicode - icutest
 Group:		System/Libraries
@@ -124,8 +108,6 @@ Group:		Development/Other
 Requires:	%{libicudata} >= %{EVRD}
 Requires:	%{libicui18n} >= %{EVRD}
 Requires:	%{libicuio} >= %{EVRD}
-Requires:	%{libicule} >= %{EVRD}
-Requires:	%{libiculx} >= %{EVRD}
 Requires:	%{libicutest} >= %{EVRD}
 Requires:	%{libicutu} >= %{EVRD}
 Requires:	%{libicuuc} >= %{EVRD}
@@ -216,12 +198,6 @@ unset TARGET
 %files -n %{libicuio}
 %{_libdir}/libicuio.so.%{major}*
 
-%files -n %{libicule}
-%{_libdir}/libicule.so.%{major}*
-
-%files -n %{libiculx}
-%{_libdir}/libiculx.so.%{major}*
-
 %files -n %{libicutest}
 %{_libdir}/libicutest.so.%{major}*
 
@@ -235,9 +211,7 @@ unset TARGET
 %{_bindir}/icu-config
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-%dir %{_includedir}/layout
 %dir %{_includedir}/unicode
-%{_includedir}/layout/*
 %{_includedir}/unicode/*
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*

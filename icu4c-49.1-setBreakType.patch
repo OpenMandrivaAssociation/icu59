@@ -1,6 +1,6 @@
---- icu/source/common/unicode/rbbi.h.setBreakType	2012-04-05 22:46:08.000000000 +0200
-+++ icu/source/common/unicode/rbbi.h	2012-04-07 19:18:41.629484616 +0200
-@@ -658,6 +658,11 @@ public:
+--- icu/source/common/unicode/rbbi.h.0000~	2016-11-12 02:44:37.804432639 +0100
++++ icu/source/common/unicode/rbbi.h	2016-11-12 02:46:16.356195580 +0100
+@@ -638,6 +638,12 @@ public:
       */
      virtual RuleBasedBreakIterator &refreshInputText(UText *input, UErrorCode &status);
  
@@ -8,20 +8,21 @@
 +      * Set the type of the break iterator.
 +      * @internal
 +      */
-+    virtual void setBreakType(int32_t type);
++    void setBreakType(int32_t type);
++
  
- protected:
+ private:
      //=======================================================================
-@@ -688,12 +693,6 @@ protected:
-     virtual int32_t getBreakType() const;
- #endif
+@@ -651,12 +657,6 @@ private:
+     void reset(void);
  
--    /**
+     /**
 -      * Set the type of the break iterator.
 -      * @internal
 -      */
--    virtual void setBreakType(int32_t type);
+-    void setBreakType(int32_t type);
 -
- #ifndef U_HIDE_INTERNAL_API
-     /**
+-    /**
        * Common initialization function, used by constructors and bufferClone.
+       * @internal
+       */
