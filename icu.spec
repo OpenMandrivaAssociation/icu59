@@ -16,7 +16,7 @@
 Summary:	International Components for Unicode
 Name:		icu
 Epoch:		1
-Version:	58.1
+Version:	59.1
 Release:	1
 License:	MIT
 Group:		System/Libraries
