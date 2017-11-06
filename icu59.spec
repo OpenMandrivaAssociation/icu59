@@ -1,11 +1,10 @@
 %define major %(echo %{version} |cut -d. -f1)
-%define libicudata %mklibname %{name}data %{major}
-%define libicui18n %mklibname %{name}i18n %{major}
-%define libicuio %mklibname %{name}io %{major}
-%define libicutest %mklibname %{name}test %{major}
-%define libicutu %mklibname %{name}tu %{major}
-%define libicuuc %mklibname %{name}uc %{major}
-%define devname %mklibname %{name} -d
+%define libicudata %mklibname icudata %{major}
+%define libicui18n %mklibname icui18n %{major}
+%define libicuio %mklibname icuio %{major}
+%define libicutest %mklibname icutest %{major}
+%define libicutu %mklibname icutu %{major}
+%define libicuuc %mklibname icuuc %{major}
 %ifarch %arm
 %define	_disable_lto %nil
 %endif
@@ -13,17 +12,17 @@
 %define tarballver %(echo %{version}|sed -e 's|\\.|_|g')
 %bcond_with	crosscompile
 
-Summary:	International Components for Unicode
-Name:		icu
+Summary:	Old version of International Components for Unicode
+Name:		icu59
 Epoch:		1
 Version:	59.1
 Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.icu-project.org/index.html
-Source0:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-src.tgz
-Source1:	http://download.icu-project.org/files/icu4c/%{version}/%{name}4c-%{tarballver}-docs.zip
-Patch0:		%{name}4c-49.1-setBreakType.patch
+Source0:	http://download.icu-project.org/files/icu4c/%{version}/icu4c-%{tarballver}-src.tgz
+Patch0:		icu4c-49.1-setBreakType.patch
+Patch1:		icu59-glibc-2.26.patch
 BuildRequires:	doxygen
 
 %description
@@ -50,14 +49,6 @@ include:
   * Time: Multi-calendar and time zone
   * Formatting and Parsing: dates, times, numbers, currencies, messages and   
     rule based
-
-%package doc
-Summary:	Documentation for the International Components for Unicode
-Group:		System/Libraries
-Requires:	%{name} >= %{EVRD}
-
-%description doc
-Documentation for the International Components for Unicode.
 
 %package -n %{libicudata}
 Summary:	Library for the International Components for Unicode - icudata
@@ -102,30 +93,9 @@ Group:		System/Libraries
 %description -n %{libicuuc}
 Library for the International Components for Unicode - icuuc.
 
-%package -n %{devname}
-Summary:	Development files for the International Components for Unicode
-Group:		Development/Other
-Requires:	%{libicudata} >= %{EVRD}
-Requires:	%{libicui18n} >= %{EVRD}
-Requires:	%{libicuio} >= %{EVRD}
-Requires:	%{libicutest} >= %{EVRD}
-Requires:	%{libicutu} >= %{EVRD}
-Requires:	%{libicuuc} >= %{EVRD}
-Provides:	%{name}%{major}-devel = %{EVRD}
-Provides:	%{name}-devel = %{EVRD}
-#define _requires_exceptions statically\\|linked
-
-%description -n	%{devname}
-Development files and headers for the International Components for Unicode.
-
 %prep
-%setup -qn %{name}
+%setup -qn icu
 %apply_patches
-
-mkdir -p docs
-cd docs
-unzip -q %{SOURCE1}
-cd -
 
 %build
 pushd source
@@ -179,15 +149,16 @@ unset TARGET
 %endif
 %makeinstall_std -C source
 
-%files
-%{_bindir}/*
-%exclude %{_bindir}/icu-config
-%{_sbindir}/*
-
-%files doc
-%doc readme.html docs/*
-%{_mandir}/man1/*
-%{_mandir}/man8/*
+# No tools, docs or -devel files for compat packages...
+rm -rf %{buildroot}%{_bindir} \
+	%{buildroot}%{_sbindir} \
+	%{buildroot}%{_mandir}/man1 \
+	%{buildroot}%{_mandir}/man8 \
+	%{buildroot}%{_libdir}/*.so \
+	%{buildroot}%{_libdir}/pkgconfig \
+	%{buildroot}%{_includedir} \
+	%{buildroot}%{_libdir}/icu \
+	%{buildroot}%{_datadir}/icu
 
 %files -n %{libicudata}
 %{_libdir}/libicudata.so.%{major}*
@@ -206,15 +177,3 @@ unset TARGET
 
 %files -n %{libicuuc}
 %{_libdir}/libicuuc.so.%{major}*
-
-%files -n %{devname}
-%{_bindir}/icu-config
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
-%dir %{_includedir}/unicode
-%{_includedir}/unicode/*
-%dir %{_libdir}/%{name}
-%{_libdir}/%{name}/*
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
-
