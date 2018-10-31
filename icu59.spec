@@ -16,7 +16,7 @@ Summary:	Old version of International Components for Unicode
 Name:		icu59
 Epoch:		1
 Version:	59.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.icu-project.org/index.html
