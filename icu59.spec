@@ -95,7 +95,7 @@ Library for the International Components for Unicode - icuuc.
 
 %prep
 %setup -qn icu
-%apply_patches
+%autopatch -p1
 
 %build
 pushd source
