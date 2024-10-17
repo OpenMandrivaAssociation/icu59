@@ -19,7 +19,7 @@ Version:	59.1
 Release:	3
 License:	MIT
 Group:		System/Libraries
-Url:		http://www.icu-project.org/index.html
+Url:		https://www.icu-project.org/index.html
 Source0:	http://download.icu-project.org/files/icu4c/%{version}/icu4c-%{tarballver}-src.tgz
 Patch0:		icu4c-49.1-setBreakType.patch
 Patch1:		icu59-glibc-2.26.patch
